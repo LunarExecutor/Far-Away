@@ -14,11 +14,15 @@ function handleDeleteItem(id) {
 function handleToggleItem(id) {
 setItems((items) => items.map(item => item.id === id ? {...item, packed: !item.packed} : item))
 }
+function handleClearList() {
+  const confirmed = window.confirm("Are you sure you want to clear the list?");
+  if (confirmed) setItems([]);
+}
   return (
   <div className="app">
       <Logo />
       <Form OnAddItems={handleAddItems}/>
-      <PackingList items={items} OnDeleteItem={handleDeleteItem} OnToggleItem={handleToggleItem}/>
+      <PackingList items={items} OnDeleteItem={handleDeleteItem} OnToggleItem={handleToggleItem} OnClearList={handleClearList}/>
       <Stats items={items}/>
     </div>
   );
@@ -62,13 +66,29 @@ function Form({OnAddItems}) {
   </form>
   );
 }
-function PackingList({items, OnDeleteItem, OnToggleItem}) {
+function PackingList({items, OnDeleteItem, OnToggleItem, OnClearList}) {
+  const [sortBy, setSortBy] = useState("input");
+
+
+
+  let sortedItems;
+  if(sortBy === "input") sortedItems= items;
+  if(sortBy === "description") sortedItems= items.slice().sort((a,b) => a.description.localeCompare(b.description));
+  if(sortBy === "packed") sortedItems= items.slice().sort((a, b) => Number(a.packed) - Number(b.packed));
   return (
      <div className="list">
       <ul>
-    {items.map((item) => (
+    {sortedItems.map((item) => (
     <Item item = {item} OnDeleteItem={OnDeleteItem} OnToggleItem={OnToggleItem} key={item.id}/> ))}
       </ul>
+     <div className="actions">
+      <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <option value='input'>Sort by input order</option>
+        <option value='description'>Sort by description</option>
+        <option value='packed'>Sort by packed status</option>
+      </select>
+      <button onClick={OnClearList}>Clear list</button>
+      </div>
      </div>
   );
 }
@@ -88,7 +108,7 @@ function Stats({items}) {
   const numItems = items.length;
   const packedItems = items.filter((item) => item.packed).length;
   const packedPercent = Math.round((packedItems / numItems) * 100);
-  
+
   return (
    <footer className="stats">
     <em>
