@@ -16,7 +16,7 @@ function handleDeleteItem(id) {
 }
 
 function handleToggleItem(id) {
-setItems((items) => items.map(item => item.id === id ? {...item, packed: !item.packed} : item))
+setItems((items) => items.map(item => item.id === id ? {...item, packed: !item.packed} : item)) 
 }
 function handleClearList() {
   const confirmed = window.confirm("Are you sure you want to clear the list?");
