@@ -8,8 +8,8 @@ import Stats from "./Stats";
 export default function App() {
   const [items, setItems] = useState([]); //creating new state variable for the list of items
 
-  function handleAddItems(item){ // item is an object used to create a new item
-    setItems((items) => [...items, item]); //using the spread operator to add the new item without mutating the original array
+  function handleAddItems(id){ // item is an object used to create a new item
+    setItems((items) => [...items, id]); //using the spread operator to add the new item without mutating the original array
   }
 function handleDeleteItem(id) {
   setItems((items) => items.filter((item) => item.id !== id)); 
