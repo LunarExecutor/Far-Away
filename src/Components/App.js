@@ -12,7 +12,7 @@ export default function App() {
     setItems((items) => [...items, item]); //using the spread operator to add the new item without mutating the original array
   }
 function handleDeleteItem(id) {
-  setItems((items) => items.filter((item) => item.id !== id));
+  setItems((items) => items.filter((item) => item.id !== id)); 
 }
 
 function handleToggleItem(id) {

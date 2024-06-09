@@ -11,13 +11,13 @@ export default function Form({ OnAddItems }) {
 
     if (!description) return;
 
-    const newItem = { id: Date.now(), description, quantity, packed: false };
+    const newItem = { id: Date.now(), description, quantity, packed: false }; // data.now() used to generate unique ids
     console.log(newItem);
 
     OnAddItems(newItem);
 
-    setDescription("");
-    setQuantity(1);
+    setDescription(""); 
+    setQuantity(1); 
   }
   return (
     <form className="add-form" onSubmit={handleSubmit}>
